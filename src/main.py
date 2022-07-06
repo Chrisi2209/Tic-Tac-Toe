@@ -195,6 +195,7 @@ def main():
         
         if user_input == "help":
             user_input = None
+            continue
 
 
         X_coors.append(tuple(user_input)) if counter == 1 else O_coors.append(tuple(user_input))
