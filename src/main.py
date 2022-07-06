@@ -88,6 +88,46 @@ Help text:
     return tuple(user_input)
 
 
+def win_draw_check(X_coors, O_coors):
+    if len(X_coors + O_coors) >= 9:
+        return "draw"
+    # 3 in a row
+    won = False
+    for player in X_coors, O_coors:
+        for row in range(3):
+            won = True
+            for column in range(3):
+                if (column, row) not in player:
+                    won = False
+            if won == True:
+                return player
+    # 3 in a column
+    won = False
+    for player in X_coors, O_coors:
+        for column in range(3):
+            won = True
+            for row in range(3):
+                if (column, row) not in player:
+                    won = False
+            if won == True:
+                return player
+    # diagonal
+    for player in X_coors, O_coors:
+        for inverter in range(2):
+            won = True
+            for i in range(3):
+                # y coor is inverted for bottom left -> top right
+                if (i, i + (-2 * i + 2) * inverter) not in player:
+                    won = False
+            if won == True:
+                return player
+    
+    return None
+    
+            
+
+
+
 def main():
     print("xxxTIC TAC TOExxx")
 
@@ -100,7 +140,38 @@ def main():
         if user_input  is not None:
             reprint_gameboard(X_coors, O_coors)
             counter *= -1
-        
+            won = win_draw_check(X_coors, O_coors)
+            if won == "draw":
+                print("Draw!")
+                while True:
+                    if (response :=input("Do you want to play again? (Y/N) ").lower()) == "y":
+                        X_coors.clear()
+                        O_coors.clear()
+                        break
+                    elif response == "n":
+                        exit()
+                continue
+            elif won is X_coors:
+                print("Player X won!")
+                while True:
+                    if (response :=input("Do you want to play again? (Y/N) ").lower()) == "y":
+                        X_coors.clear()
+                        O_coors.clear()
+                        break
+                    elif response == "n":
+                        exit()
+                continue
+            elif won is O_coors:
+                print("Player O won!")
+                while True:
+                    if (response :=input("Do you want to play again? (Y/N) ").lower()) == "y":
+                        X_coors.clear()
+                        O_coors.clear()
+                        break
+                    elif response == "n":
+                        exit()
+                continue
+                    
         if user_input is None:
             user_input = check_and_convert_input(input())
         else:
@@ -117,7 +188,7 @@ def main():
             user_input = None
             continue
 
-        elif user_input == "reset":
+        if user_input == "reset":
             X_coors.clear()
             O_coors.clear()
             continue
@@ -127,9 +198,7 @@ def main():
 
 
         X_coors.append(tuple(user_input)) if counter == 1 else O_coors.append(tuple(user_input))
-        print(X_coors)
-
-
+3
         
 if __name__ == "__main__":
     main()
