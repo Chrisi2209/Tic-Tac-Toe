@@ -1,4 +1,4 @@
-from mailbox import FormatError
+import help
 
 
 def reprint_gameboard(X_coors, O_coors):
@@ -53,24 +53,7 @@ def check_and_convert_input(user_input):
             print("Resetting game")
             return "reset"
         case "help":
-            print("""\
-Help text:
------ rules 
-- there are two players
-- the two players alternately draw their symbol (X or O) into an unoccupoed the field on the board (X goes first)
-- the first player to have 3 of their own symbol in a row wins the game
-- if the board is filled and no player won, the game is a draw
-
------ formatting and allowed values of inputs
-- every turn, you have to specify the x and y coordinates of your placement.
-- the coordinate grid is layed out so that the bottom left cell is (1|1)
-- both coordinates have to be in a range from 1 to 3
-- the specified cell is not allowed to already be occupied
-
------ special functions
-- inputting exit will exit the game
-- inputting reset will reset the game\
-""")
+            print(help.help_text)
             return "help"
 
     user_input = user_input.split(",")
@@ -144,7 +127,7 @@ def main():
             if won == "draw":
                 print("Draw!")
                 while True:
-                    if (response :=input("Do you want to play again? (Y/N) ").lower()) == "y":
+                    if (response := input("Do you want to play again? (Y/N) ").lower()) == "y":
                         X_coors.clear()
                         O_coors.clear()
                         break
@@ -154,7 +137,7 @@ def main():
             elif won is X_coors:
                 print("Player X won!")
                 while True:
-                    if (response :=input("Do you want to play again? (Y/N) ").lower()) == "y":
+                    if (response := input("Do you want to play again? (Y/N) ").lower()) == "y":
                         X_coors.clear()
                         O_coors.clear()
                         break
@@ -164,7 +147,7 @@ def main():
             elif won is O_coors:
                 print("Player O won!")
                 while True:
-                    if (response :=input("Do you want to play again? (Y/N) ").lower()) == "y":
+                    if (response := input("Do you want to play again? (Y/N) ").lower()) == "y":
                         X_coors.clear()
                         O_coors.clear()
                         break
